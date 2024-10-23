@@ -39,13 +39,4 @@ public class ParticipanteService {
         return participanteRepository.findEventosComParticipantes();
     }
   
-    /*
-    public void addParticipanteToEvento(Participante participante, Long eventoId) {
-        // Salvar o participante
-        participanteRepository.save(participante);
-
-        // Adicionar o relacionamento na tabela evento_participante
-        participanteRepository.addParticipanteToEvento(eventoId, participante.getId());
-    }
- */
 }

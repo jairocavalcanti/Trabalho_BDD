@@ -61,11 +61,4 @@ public class ParticipanteRepository {
         return jdbcTemplate.queryForList(sql);
     }
 
-    /*
-     * public void addParticipanteToEvento(Long eventoId, Long participanteId) {
-     * String sql =
-     * "INSERT INTO evento_participante (evento_id, participante_id) VALUES (?, ?)";
-     * jdbcTemplate.update(sql, eventoId, participanteId);
-     * }
-     */
 }

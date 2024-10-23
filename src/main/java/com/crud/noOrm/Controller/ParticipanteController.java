@@ -57,47 +57,4 @@ public class ParticipanteController {
         return ResponseEntity.ok(eventosComParticipantes);
     }
 
-    /*
-     * @PostMapping("/evento/{eventoId}")
-     * public void addParticipante(@PathVariable Long eventoId, @RequestBody
-     * Participante participante) {
-     * participanteService.addParticipanteToEvento(participante, eventoId);
-     * }
-     */
-
-    /*
-     * @DeleteMapping("/delete/{id}")
-     * // Metodo tipo String para retornar String
-     * public ResponseEntity<String> deletePessoa(@PathVariable Long id) {
-     * Pessoa achei = pessoaRepository.findById(id);
-     * if (achei != null) {
-     * pessoaRepository.delete(id);
-     * return ResponseEntity.ok("Pessoad" + id);
-     * } else {
-     * return ResponseEntity.status(HttpStatus.NOT_FOUND).body("ID de valor: " + id
-     * + " não existente!");
-     * }
-     * 
-     * }
-     * 
-     * @PostMapping("/{participanteId}/eventos/{eventoId}")
-     * public ResponseEntity<String> associateParticipanteToEvento(@PathVariable
-     * Long participanteId,
-     * 
-     * @PathVariable Long eventoId,
-     * 
-     * @RequestBody String nome) {
-     * // Aqui você deve chamar o método de associação
-     * int result = pessoaRepository.associateToEvento(eventoId, new
-     * Pessoa(participanteId, nome, 0)); // A idade pode
-     * // ser 0
-     * 
-     * if (result > 0) {
-     * return ResponseEntity.ok("Participante associado ao evento com sucesso!");
-     * } else {
-     * return ResponseEntity.status(HttpStatus.NOT_FOUND).
-     * body("Participante ou evento não encontrado.");
-     * }
-     * }
-     */
 }
