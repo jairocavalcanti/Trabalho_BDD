@@ -12,38 +12,41 @@
             padding: 20px;
             background-color: #f3f3f3;
         }
-        
+
         h1 {
             text-align: center;
             color: #0e11a1;
         }
-        
+
         .container {
             display: flex;
-            flex-wrap: wrap; /* Permite que as divs quebrem linha se necessário */
-            gap: 20px; /* Espaço entre as divs */
+            flex-wrap: wrap;
+            /* Permite que as divs quebrem linha se necessário */
+            gap: 20px;
+            /* Espaço entre as divs */
         }
-        
-        .container > div {
-            flex: 1 1 300px; /* Faz com que as divs ocupem largura flexível, com um mínimo de 300px */
+
+        .container>div {
+            flex: 1 1 300px;
+            /* Faz com que as divs ocupem largura flexível, com um mínimo de 300px */
             background-color: #fff;
             border: 1px solid #ccc;
             border-radius: 5px;
             padding: 15px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        } 
-        
-        
+        }
+
+
         form {
             display: flex;
             flex-direction: column;
             gap: 10px;
         }
-        
+
         label {
             font-weight: bold;
         }
-        
+
         button {
             background-color: #1b2c8d;
             color: white;
@@ -52,31 +55,31 @@
             padding: 10px;
             cursor: pointer;
         }
-        
+
         button:hover {
             background-color: #218838;
         }
-        
+
         ul {
             list-style-type: none;
             padding: 0;
         }
-        
+
         ul li {
             padding: 5px 0;
             border-bottom: 1px solid #ddd;
         }
-        
+
         ul li:last-child {
             border-bottom: none;
         }
-        
+
         /* Estilo específico para listas de eventos e participantes */
-        #eventos-list, #participantes {
-            flex: 1 1 300px; /* Controla a largura das listas */
+        #eventos-list,
+        #participantes {
+            flex: 1 1 300px;
+            /* Controla a largura das listas */
         }
-        
-        
     </style>
 
 </head>
@@ -96,16 +99,24 @@
         </ul>
     </div>
 
+    <div>
+        <h2>Participantes Associados a Eventos</h2>
+        <ul id="participantes-associados">
+            <!-- Participantes associados serão inseridos aqui via JavaScript -->
+        </ul>
+    </div>
+
+
     <!-- OS ID'S NO FORMULÁRIO HTML PRECISAM SER DIFERENTES!! -->
     <div>
         <h2>Adicionar Novo Evento</h2>
         <form id="add-evento-form">
             <label for="add-nome">Nome do Evento:</label>
             <input type="text" id="add-nome" required><br>
-            
+
             <label for="add-data">Data:</label>
             <input type="date" id="add-data" required><br>
-            
+
             <button type="submit">Adicionar Evento</button>
         </form>
     </div>
@@ -115,7 +126,7 @@
         <form id="exc-evento-form">
             <label for="evento-id">ID do evento:</label>
             <input type="number" id="evento-id" required><br> <!-- Use este campo para o ID -->
-          
+
             <button type="submit">Excluir evento</button>
         </form>
     </div>
@@ -125,13 +136,13 @@
         <form id="update-evento-form">
             <label for="novoNomeevento">Novo nome do evento:</label>
             <input type="text" id="novoNomeevento" required><br>
-            
+
             <label for="novaDataevento">Nova data do evento:</label>
             <input type="date" id="novaDataevento" required><br>
-            
+
             <label for="update-evento-id">ID do evento:</label>
             <input type="number" id="update-evento-id" required><br>
-           
+
             <button type="submit">Alterar evento</button>
         </form>
     </div>
@@ -141,10 +152,10 @@
         <form id="add-participante-form">
             <label for="participante-nome">Nome do Participante:</label>
             <input type="text" id="participante-nome" required><br>
-           
+
             <label for="participante-idade">Idade do Participante:</label>
             <input type="number" id="participante-idade" required><br>
-           
+
             <button type="submit">Adicionar Participante</button>
         </form>
     </div>
@@ -152,10 +163,10 @@
     <div>
         <h2>Excluir participante</h2>
         <form id="exc-participante-form">
-           
+
             <label for="participante-id">ID do Participante:</label>
             <input type="number" id="participante-id" required><br> <!-- Use este campo para o ID -->
-           
+
             <button type="submit">Excluir Participante</button>
         </form>
     </div>
@@ -165,13 +176,13 @@
         <form id="update-participante-form">
             <label for="update-participante-nome">novo Nome do participante:</label>
             <input type="text" id="update-participante-nome" required><br>
-            
+
             <label for="update-participante-idade">nova Idade do participante:</label>
             <input type="number" id="update-participante-idade" required><br>
-            
+
             <label for="update-participante-id">ID do participante:</label>
             <input type="number" id="update-participante-id" required><br>
-            
+
             <button type="submit">Alterar participante</button>
         </form>
     </div>
@@ -181,53 +192,47 @@
         <form id="associar-participante-form">
             <label for="evento-associar-id">ID do Evento:</label>
             <input type="number" id="evento-associar-id" required><br>
-            
+
             <label for="participante-associar-id">ID do Participante:</label>
             <input type="number" id="participante-associar-id" required><br>
-            
+
             <button type="submit">Associar Participante</button>
         </form>
     </div>
 
-    <div>
-        <h2>Participantes Associados ao Evento</h2>
-        <ul id="participantes-associados">
-            <!-- Participantes associados serão inseridos aqui via JavaScript -->
-        </ul>
-    </div>
 
     <script>
-       
+
         async function fetchEventosComParticipantes() {
             try {
                 const response = await fetch('/participantes/eventos-com-participantes');
-        
+
                 // Verifica se a resposta é bem-sucedida
                 if (!response.ok) {
                     throw new Error('Erro ao buscar eventos com participantes');
                 }
-        
+
                 const eventosComParticipantes = await response.json();
                 const participantesAssociadosList = document.getElementById('participantes-associados');
                 participantesAssociadosList.innerHTML = ''; // Limpa a lista antes de adicionar novos itens
-        
+
                 // Usamos um objeto para agrupar os eventos e seus participantes
                 const eventosMap = {};
-        
+
                 // Itera sobre cada item do retorno
                 eventosComParticipantes.forEach(item => {
                     const eventoNome = item.evento_nome;
                     const participanteNome = item.participante_nome;
-        
+
                     // Verifica se o evento já existe no mapa
                     if (!eventosMap[eventoNome]) {
                         eventosMap[eventoNome] = []; // Inicializa um array para os participantes
                     }
-        
+
                     // Adiciona o participante ao evento
                     eventosMap[eventoNome].push(participanteNome);
                 });
-        
+
                 // Agora iteramos sobre o mapa para exibir os eventos e seus participantes
                 for (const [eventoNome, participantes] of Object.entries(eventosMap)) {
                     const li = document.createElement('li');
@@ -239,7 +244,7 @@
                 alert('Ocorreu um erro ao buscar os eventos com participantes.');
             }
         }
-        
+
 
         async function fetchEventos() {
             const response = await fetch('/eventos');
@@ -335,12 +340,12 @@
             const participanteNome = document.getElementById('update-participante-nome').value;
             const participanteIdade = document.getElementById('update-participante-idade').value;
 
-            await fetch(`/participantes/atualizar/${participanteId}` ,{
-                method: "PUT", 
+            await fetch(`/participantes/atualizar/${participanteId}`, {
+                method: "PUT",
                 headers: {
                     "Content-Type": 'application/json',
                 },
-                body: JSON.stringify({nome: participanteNome, idade: participanteIdade})
+                body: JSON.stringify({ nome: participanteNome, idade: participanteIdade })
             });
             fetchparticipantes();
             document.getElementById("update-participante-form").reset();
@@ -348,10 +353,10 @@
 
         document.getElementById("associar-participante-form").addEventListener('submit', async (e) => {
             e.preventDefault(); // Previna o comportamento padrão do formulário
-        
+
             const evento_Id = document.getElementById("evento-associar-id").value;
             const participante_Id = document.getElementById("participante-associar-id").value;
-        
+
             // Faz a requisição para associar o participante ao evento
             await fetch(`/participantes/adicionarNoevento/${evento_Id}/${participante_Id}`, {
                 method: "POST",
@@ -359,14 +364,14 @@
                     "Content-Type": 'application/json',
                 }
             });
-        
+
             // Atualiza a lista de participantes associados após a associação
             fetchEventosComParticipantes();
-        
+
             // Limpa o formulário após o envio
             document.getElementById('associar-participante-form').reset();
         });
-        
+
 
         document.getElementById("exc-evento-form").addEventListener('submit', async (e) => {
             e.preventDefault();
